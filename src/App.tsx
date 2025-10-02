@@ -13,21 +13,21 @@ interface Project {
 const sampleProjects: Project[] = [
   {
     id: 1,
-    name: 'Mechanical Part',
-    fileUrl: 'https://threejs.org/examples/models/stl/binary/pr2_head_pan.stl',
+    name: 'FRC WarHawks 2024 CAD',
+    fileUrl: '/WarHawks2024.stl',
     fileType: 'stl',
   },
   {
     id: 2,
-    name: 'Robot Component',
-    fileUrl: 'https://threejs.org/examples/models/stl/binary/pr2_head_tilt.stl',
+    name: 'FTC Ninjabotics 2024 CAD',
+    fileUrl: '/Ninjabotics2024.stl',
     fileType: 'stl',
   },
   {
     id: 3,
-    name: 'Helmet Design',
-    fileUrl: 'https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf',
-    fileType: 'gltf',
+    name: 'FTC Robotics Swerve Pod',
+    fileUrl: '/swervepod.stl',
+    fileType: 'stl',
   },
 ];
 
