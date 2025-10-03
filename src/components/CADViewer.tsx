@@ -56,7 +56,6 @@ function CameraController({ position, target }: { position: [number, number, num
 
 function Model({ fileUrl, fileType }: CADViewerProps) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (fileType === 'step') {
@@ -64,63 +63,30 @@ function Model({ fileUrl, fileType }: CADViewerProps) {
     }
   }, [fileType]);
 
-  if (error) {
+  if (fileType === 'stl') {
+    const geometry = useLoader(STLLoader, fileUrl);
+
     return (
-      <mesh>
-        <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="#ff6b6b" wireframe />
+      <mesh ref={meshRef} geometry={geometry}>
+        <meshStandardMaterial
+          color="#808080"
+          metalness={0.5}
+          roughness={0.5}
+        />
       </mesh>
     );
   }
 
-  if (fileType === 'stl') {
-    try {
-      const geometry = useLoader(STLLoader, fileUrl, undefined, () => {
-        setError(true);
-      });
-
-      return (
-        <mesh ref={meshRef} geometry={geometry}>
-          <meshStandardMaterial
-            color="#808080"
-            metalness={0.5}
-            roughness={0.5}
-          />
-        </mesh>
-      );
-    } catch (err) {
-      console.error('Error loading STL:', err);
-      return (
-        <mesh>
-          <boxGeometry args={[2, 2, 2]} />
-          <meshStandardMaterial color="#ff6b6b" wireframe />
-        </mesh>
-      );
-    }
-  }
-
   if (fileType === 'gltf') {
-    try {
-      const gltf = useLoader(GLTFLoader, fileUrl, undefined, () => {
-        setError(true);
-      });
+    const gltf = useLoader(GLTFLoader, fileUrl);
 
-      return <primitive object={gltf.scene} />;
-    } catch (err) {
-      console.error('Error loading GLTF:', err);
-      return (
-        <mesh>
-          <boxGeometry args={[2, 2, 2]} />
-          <meshStandardMaterial color="#ff6b6b" wireframe />
-        </mesh>
-      );
-    }
+    return <primitive object={gltf.scene} />;
   }
 
   return (
     <mesh>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color="#ff6b6b" wireframe />
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="#ff6b6b" />
     </mesh>
   );
 }
